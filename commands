@@ -1,0 +1,32 @@
+-- Connect to database (PostgreSQL) --
+-- Change DATABASES in settings.py to -- 
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'CST8333-Covid19DB',
+        'USER': 'postgres',
+        'PASSWORD': 'Whatsupbro123!',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+    
+
+-- This module is required to map project to the database --
+pip install psycopg2
+
+
+-- Migrate models of an app to the database --
+1/ python manage.py makemigrations covid19 # make migration file in the app folder
+2/ python manage.py sqlmigrate covid19 0001 # prepare queries
+3/ python manage.py migrate # migrate all tables (models) to the database
+#################################################
+-- Clear the migration history --
+1/ python manage.py showmigrations (show all migrations)
+2/ python manage.py migrate --fake covid19 zero (clear migration history of covid19 app)
+
+
+
+-- Install boostrap package to make the FORM (add/edit) better --
+pip install django-crispy-forms 
+
+-- To change any function of the FORM (Ex: required field to False) --
+Change in __init__ function of forms.py

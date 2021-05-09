@@ -1,0 +1,33 @@
+{% extends 'covid19/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<form action="" method="post" autocomplete="off">
+    {% csrf_token %}
+        {{form.uid|as_crispy_field}}
+        {{form.nameEN|as_crispy_field}}
+        {{form.nameFR|as_crispy_field}}
+        {{form.date|as_crispy_field}}
+        {{form.num_confirmed|as_crispy_field}}
+        {{form.num_probable|as_crispy_field}}
+        {{form.num_death|as_crispy_field}}       
+        <div class="row">
+            <div class="col-md-4">
+                {{form.num_total|as_crispy_field}}
+            </div>
+            <div class="col-md-8">
+                {{form.rate_total|as_crispy_field}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                {{form.num_tested|as_crispy_field}}
+            </div>
+            <div class="col-md-8">
+                {{form.rate_tested|as_crispy_field}}
+            </div>
+        </div>
+        {{form.num_today|as_crispy_field}}
+        <button type="submit" class="btn btn-success">Submit</button>
+</form>
+{% endblock content %}

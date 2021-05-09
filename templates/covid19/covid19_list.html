@@ -1,0 +1,119 @@
+{% extends 'covid19/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 col-sm-6 col-md-6">
+        <a href="{% url 'covid19_add'%}" class="btn btn-outline-success">
+            <i class="fas fa-plus"></i> Add New
+        </a>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-6">
+        <form action="{% url 'covid19_upload'%}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file", name="file">
+            <button class="btn btn-primary">Upload</button>
+        </form>
+    </div>
+</div>
+
+<br>
+
+<form action="" method="get">
+<div class="row rounded m-1 pt-2 align-items-center" style="background: #acd0ff;">
+    <div class="col-sm">
+        <label><strong>Name in English:</strong></label>
+            {{myFilter.form.nameEN}}
+    </div>
+
+    <div class="col-sm">
+        <label><strong>Name in France:</strong></label>
+            {{myFilter.form.nameFR}}
+    </div>
+
+    <div>
+        <label><strong>Date Range:</strong></label>
+            {{myFilter.form.date}}
+    </div>
+
+    <!-- <div>
+        <label><strong>Name in France:</strong></label>
+            {{myFilter.form.nameFR}}
+    </div>
+
+    <div>
+        <label><strong>From Date:</strong></label>
+            {{myFilter.form.date}}
+    </div> -->
+
+    <div class="col-sm">
+        <button type="submit" class="btn btn-primary"><i class="fas fa-search mr-1"></i> Search</button>
+    </div>
+</div>
+</form>
+
+
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">ID</th>
+            <th scope="col">PrName in EN</th>
+            <th scope="col">PrName in FR</th>
+            <th scope="col">Date</th>
+            <th scope="col">Confirm cases</th>
+            <th scope="col">Probable cases</th>
+            <th scope="col">Deaths</th>
+            <th scope="col">Total cases</th>
+            <th scope="col">Tested cases</th>
+            <th scope="col">Rate in total</th>
+            <th scope="col">Tested rate</th>
+            <th scope="col">Today cases</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+
+        <tbody>
+            
+            {% if covid19_list %}
+                
+            {% endif %}
+                
+            {% for covid19 in covid19_list %}
+                <tr>
+                    <td>{{covid19.id}}</td>
+                    <td>{{covid19.uid}}</td>
+                    <td>{{covid19.nameEN}}</td>
+                    <td>{{covid19.nameFR}}</td>
+                    <td>{{covid19.date}}</td>
+                    <td>{{covid19.num_confirmed}}</td>
+                    <td>{{covid19.num_probable}}</td>
+                    <td>{{covid19.num_death}}</td>
+                    <td>{{covid19.num_total}}</td>
+                    <td>{{covid19.num_tested}}</td>
+                    <td>{{covid19.rate_tested}}</td>
+                    <td>{{covid19.num_today}}</td>
+                    <td>{{covid19.rate_total}}</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a href="{% url 'covid19_update' covid19.id %}">
+                                <button class="btn btn-success waves-effect px-4">
+                                    Edit
+                                </button>
+                            </a>
+                            <form action="{% url 'covid19_delete' covid19.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger waves-effect px-4"
+                                onclick="return confirm('Are you sure you want to delete this record?');">
+                                Delete
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+                
+        </tbody>
+
+        </table>
+{% endblock content %}
